@@ -69,7 +69,7 @@ if __name__ == "__main__":
         cv2.waitKey()
     else:
         video_capture = cv2.VideoCapture(0)
-        while True:
+        while cv2.waitKey(1) != 113:
             ret, frame = video_capture.read()
             if not ret:
                 display('-', "Failed to get Frame from the Camera")
@@ -77,8 +77,6 @@ if __name__ == "__main__":
             pedestrians = detect(frame, pedestrian_classifier, data.scale_factor, data.min_neighbors, localize=True)
             print(f"\r{Fore.CYAN}{Back.MAGENTA}{len(pedestrians)}{Back.RESET} {Fore.GREEN}Pedestrians Detected{Fore.RESET}", end='')
             cv2.imshow("Camera", frame)
-            if cv2.waitKey(1) >= 0:
-                break
         video_capture.release()
         cv2.destroyAllWindows()
     print()
